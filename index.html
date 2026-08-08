@@ -30,10 +30,10 @@ input:focus{outline:none;border-color:#A467E2;box-shadow:0 0 0 3px rgba(164,103,
   <div class="form">
     <h2>Your details</h2>
     <label>Full name<input id="f-name" placeholder="First Last"></label>
-    <label>Title<input id="f-title" placeholder="Your Title"></label>
+    <label>Title<input id="f-title" placeholder="Your title"></label>
     <label>LendAPI email<input id="f-email" placeholder="you@lendapi.com"></label>
-    <label>Booking link <span class="opt">(Calendly / Google appointment)</span><input id="f-booking" value="https://calendly.com/you" style="font-size:12.5px"></label>
-    <label>Phone <span class="opt">(optional — blank hides it)</span><input id="f-phone" placeholder="+11234567890"></label>
+    <label>Booking link <span class="opt">(optional — blank hides it)</span><input id="f-booking" placeholder="https://calendly.com/you" style="font-size:12.5px"></label>
+    <label>Phone <span class="opt">(optional — blank hides it)</span><input id="f-phone" placeholder="+1 (415) 555-0134"></label>
   </div>
   <div class="right">
     <div class="bar"><span class="lbl">Live preview</span><button id="copyBtn">Copy signature</button></div>
@@ -54,8 +54,8 @@ var LINKS = {
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function val(id,fb){var v=document.getElementById(id).value.trim();return v||fb;}
 function build(){
-  var name=esc(val('f-name','First Last')), title=esc(val('f-title','Your Title')),
-      email=esc(val('f-email','you@lendapi.com')), booking=esc(val('f-booking','https://calendly.com/you')),
+  var name=esc(val('f-name','First Last')), title=esc(val('f-title','Your title')),
+      email=esc(val('f-email','you@lendapi.com')), booking=document.getElementById('f-booking').value.trim(),
       phone=document.getElementById('f-phone').value.trim();
   var a='style="color: #7734B8; text-decoration: none;"';
   var acc='style="font-size: 10px; color: #98A2B3; letter-spacing: 0.05em; text-decoration: none;"';
@@ -64,7 +64,8 @@ function build(){
     +'<tr><td style="font-size: 12px; color: #667085;">'+title+'</td></tr>'
     +'<tr><td style="font-size: 12px; color: #475467; padding-top: 8px;">'
     +(phone?esc(phone)+' &nbsp;&middot;&nbsp; ':'')
-    +'<a href="mailto:'+email+'" '+a+'>'+email+'</a> &nbsp;&middot;&nbsp; <a href="'+booking+'" '+a+'>Book meeting slot</a></td></tr>'
+    +'<a href="mailto:'+email+'" '+a+'>'+email+'</a>'
+    +(booking?' &nbsp;&middot;&nbsp; <a href="'+esc(booking)+'" '+a+'>Book meeting slot</a>':'')+'</td></tr>'
     +'<tr><td style="font-size: 12px; color: #475467; padding-top: 2px; white-space: nowrap;">'
     +'<a href="'+LINKS.site+'" '+a+'>lendapi.com</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.demo+'" '+a+'>Book a demo</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.linkedin+'" '+a+'>LinkedIn</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.academy+'" '+a+'>Academy</a></td></tr>'
     +'<tr><td style="padding-top: 12px;"><table cellpadding="0" cellspacing="0" border="0" width="480" style="border-top: 1px solid #EAECF0;"><tr>'
