@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LendAPI Signature Generator</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#F9FAFB;font-family:Arial,Helvetica,sans-serif;color:#101828}
+.top{background:#fff;border-bottom:1px solid #EAECF0}.top-in{max-width:1080px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:12px}
+.top-in img{height:22px}.top-in .sep{color:#BD91EC}.top-in .crumb{font-size:14px;font-weight:bold;color:#663097}.top-in .tag{margin-left:auto;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#98A2B3}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 32px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+.form{flex:none;width:340px;background:#fff;border:1px solid #EAECF0;border-radius:12px;padding:24px;display:grid;gap:14px}
+.form h2{font-size:15px;margin:0}
+label{display:grid;gap:5px;font-size:12px;font-weight:bold;color:#344054}
+label .opt{font-weight:normal;color:#98A2B3}
+input{font-family:Arial,Helvetica,sans-serif;font-size:14px;padding:9px 12px;border:1px solid #D0D5DD;border-radius:6px;color:#101828;width:100%}
+input:focus{outline:none;border-color:#A467E2;box-shadow:0 0 0 3px rgba(164,103,226,.2)}
+.right{flex:1;min-width:min(546px,100%);display:grid;gap:16px}
+.card{overflow-x:auto}
+.bar{display:flex;align-items:center;gap:12px}.bar .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7734B8}
+#copyBtn{margin-left:auto;font-size:14px;font-weight:bold;color:#fff;background:#8A42D5;padding:10px 18px;border-radius:6px;border:0;cursor:pointer}
+#copyBtn.ok{background:#079455}
+.card{background:#fff;border:1px solid #EAECF0;border-radius:12px;padding:32px}
+.hint{font-size:13px;line-height:1.6;background:#F2EBFC;border:1px solid #E8DAF9;border-radius:8px;padding:12px 16px;color:#542879}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in"><img src="lendapi-logo.png" alt="LendAPI"><span class="sep">/</span><span class="crumb">Signature Generator</span><span class="tag">Internal tool</span></div></div>
+<div class="wrap">
+  <div class="form">
+    <h2>Your details</h2>
+    <label>Full name<input id="f-name" placeholder="Chakresh Peela"></label>
+    <label>Title<input id="f-title" placeholder="VP of Product"></label>
+    <label>LendAPI email<input id="f-email" placeholder="you@lendapi.com"></label>
+    <label>Booking link <span class="opt">(Calendly / Google appointment)</span><input id="f-booking" value="https://calendly.com/you" style="font-size:12.5px"></label>
+    <label>Phone <span class="opt">(optional — blank hides it)</span><input id="f-phone" placeholder="+1 (415) 555-0134"></label>
+  </div>
+  <div class="right">
+    <div class="bar"><span class="lbl">Live preview</span><button id="copyBtn">Copy signature</button></div>
+    <div class="card"><div id="sig"></div></div>
+    <div class="hint"><b>To install:</b> Copy signature → Gmail → Settings ⚙ → See all settings → General → Signature → Create new → paste → Save. Leave the Gmail app's "Mobile Signature" off so this one is used everywhere.</div>
+  </div>
+</div>
+<script>
+var LOGO = new URL('lendapi-logo.png', location.href).href;
+var LINKS = {
+  site: 'https://www.lendapi.com',
+  demo: 'https://www.lendapi.com/contact',
+  linkedin: 'https://www.linkedin.com/company/lendapi',
+  academy: 'https://www.lendapi.com/academy',
+  finovate: 'https://www.lendapi.com/blog/lendapi-wins-finovate-fall-nyc-2025-best-of-show-redefining-the-future-of-fintech',
+  soc: 'https://www.lendapi.com/blog/lendapi-successfully-completes-2025-soc-2-type-ii-audit-reinforcing-industry-leading-security'
+};
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function val(id,fb){var v=document.getElementById(id).value.trim();return v||fb;}
+function build(){
+  var name=esc(val('f-name','Chakresh Peela')), title=esc(val('f-title','VP of Product')),
+      email=esc(val('f-email','you@lendapi.com')), booking=esc(val('f-booking','https://calendly.com/you')),
+      phone=document.getElementById('f-phone').value.trim();
+  var a='style="color: #7734B8; text-decoration: none;"';
+  var acc='style="font-size: 10px; color: #98A2B3; letter-spacing: 0.05em; text-decoration: none;"';
+  return '<table cellpadding="0" cellspacing="0" border="0" style="font-family: \'Helvetica Neue\', Arial, Helvetica, sans-serif;">'
+    +'<tr><td style="font-size: 16px; font-weight: bold; color: #101828; padding-bottom: 1px;">'+name+'</td></tr>'
+    +'<tr><td style="font-size: 12px; color: #667085;">'+title+'</td></tr>'
+    +'<tr><td style="font-size: 12px; color: #475467; padding-top: 8px;">'
+    +(phone?esc(phone)+' &nbsp;&middot;&nbsp; ':'')
+    +'<a href="mailto:'+email+'" '+a+'>'+email+'</a> &nbsp;&middot;&nbsp; <a href="'+booking+'" '+a+'>Book meeting slot</a></td></tr>'
+    +'<tr><td style="font-size: 12px; color: #475467; padding-top: 2px; white-space: nowrap;">'
+    +'<a href="'+LINKS.site+'" '+a+'>lendapi.com</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.demo+'" '+a+'>Book a demo</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.linkedin+'" '+a+'>LinkedIn</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.academy+'" '+a+'>Academy</a></td></tr>'
+    +'<tr><td style="padding-top: 12px;"><table cellpadding="0" cellspacing="0" border="0" width="480" style="border-top: 1px solid #EAECF0;"><tr>'
+    +'<td style="padding-top: 12px;"><a href="'+LINKS.site+'"><img src="'+LOGO+'" alt="LendAPI" width="118" style="display: block; border: 0;"></a></td>'
+    +'<td align="right" valign="middle" style="padding-top: 12px; white-space: nowrap;"><a href="'+LINKS.finovate+'" '+acc+'>BEST OF FINOVATE FALL\u201925</a><span style="font-size: 10px; color: #D0D5DD;">&nbsp;|&nbsp;</span><a href="'+LINKS.soc+'" '+acc+'>SOC2</a></td>'
+    +'</tr></table></td></tr></table>';
+}
+function render(){document.getElementById('sig').innerHTML=build();resetBtn();}
+var btn=document.getElementById('copyBtn');
+function resetBtn(){btn.textContent='Copy signature';btn.classList.remove('ok');}
+btn.addEventListener('click', function(){
+  var node=document.getElementById('sig');
+  var done=function(){btn.textContent='Copied \u2713 \u2014 paste into Gmail';btn.classList.add('ok');};
+  if(navigator.clipboard && window.ClipboardItem){
+    navigator.clipboard.write([new ClipboardItem({
+      'text/html': new Blob([node.innerHTML],{type:'text/html'}),
+      'text/plain': new Blob([node.innerText],{type:'text/plain'})
+    })]).then(done).catch(function(){fallback(node);done();});
+  } else { fallback(node); done(); }
+});
+function fallback(node){
+  var r=document.createRange();r.selectNodeContents(node);
+  var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+  document.execCommand('copy');s.removeAllRanges();
+}
+['f-name','f-title','f-email','f-booking','f-phone'].forEach(function(id){document.getElementById(id).addEventListener('input',render);});
+render();
+</script>
+</body>
+</html>
