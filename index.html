@@ -22,6 +22,15 @@ input:focus{outline:none;border-color:#A467E2;box-shadow:0 0 0 3px rgba(164,103,
 #copyBtn.ok{background:#079455}
 .card{background:#fff;border:1px solid #EAECF0;border-radius:12px;padding:32px}
 .hint{font-size:13px;line-height:1.6;background:#F2EBFC;border:1px solid #E8DAF9;border-radius:8px;padding:12px 16px;color:#542879}
+.seg{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.seg button{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;padding:7px 14px;border:0;background:#fff;color:#667085;cursor:pointer}
+.seg button.on{background:#F2EBFC;color:#663097}
+.card.dark{background:#171717;border-color:#333}
+.card.dark #sig td{color:#c7cad0 !important}
+.card.dark #sig td[style*="font-weight: bold"]{color:#fff !important}
+.card.dark #sig a[style*="#7734B8"]{color:#BD91EC !important}
+.card.dark #sig a[style*="#98A2B3"]{color:#9aa0a8 !important}
+.card.dark #sig table[style*="border-top"]{border-top-color:#3a3d42 !important}
 </style>
 </head>
 <body>
@@ -36,7 +45,7 @@ input:focus{outline:none;border-color:#A467E2;box-shadow:0 0 0 3px rgba(164,103,
     <label>Phone <span class="opt">(optional — blank hides it)</span><input id="f-phone" placeholder="+1 (415) 555-0134"></label>
   </div>
   <div class="right">
-    <div class="bar"><span class="lbl">Live preview</span><button id="copyBtn">Copy signature</button></div>
+    <div class="bar"><span class="lbl">Live preview</span><div class="seg" title="Preview approximates Gmail's light/dark themes"><button id="mode-light" class="on">Light</button><button id="mode-dark">Dark</button></div><button id="copyBtn">Copy signature</button></div>
     <div class="card"><div id="sig"></div></div>
     <div class="hint"><b>To install:</b> Copy signature → Gmail → Settings ⚙ → See all settings → General → Signature → Create new → paste → Save. Leave the Gmail app's "Mobile Signature" off so this one is used everywhere.</div>
   </div>
@@ -58,7 +67,7 @@ function build(){
       email=esc(val('f-email','you@lendapi.com')), booking=document.getElementById('f-booking').value.trim(),
       phone=document.getElementById('f-phone').value.trim();
   var a='style="color: #7734B8; text-decoration: none;"';
-  var acc='style="font-size: 10px; color: #98A2B3; letter-spacing: 0.05em; text-decoration: none;"';
+  var acc='style="font-size: 10px; color: #667085; letter-spacing: 0.05em; text-decoration: none;"';
   return '<table cellpadding="0" cellspacing="0" border="0" style="font-family: \'Helvetica Neue\', Arial, Helvetica, sans-serif;">'
     +'<tr><td style="font-size: 16px; font-weight: bold; color: #101828; padding-bottom: 1px;">'+name+'</td></tr>'
     +'<tr><td style="font-size: 12px; color: #667085;">'+title+'</td></tr>'
@@ -68,9 +77,9 @@ function build(){
     +(booking?' &nbsp;&middot;&nbsp; <a href="'+esc(booking)+'" '+a+'>Book meeting slot</a>':'')+'</td></tr>'
     +'<tr><td style="font-size: 12px; color: #475467; padding-top: 2px; white-space: nowrap;">'
     +'<a href="'+LINKS.site+'" '+a+'>lendapi.com</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.demo+'" '+a+'>Book a demo</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.linkedin+'" '+a+'>LinkedIn</a> &nbsp;&middot;&nbsp; <a href="'+LINKS.academy+'" '+a+'>Academy</a></td></tr>'
-    +'<tr><td style="padding-top: 12px;"><table cellpadding="0" cellspacing="0" border="0" width="480" style="border-top: 1px solid #EAECF0;"><tr>'
-    +'<td style="padding-top: 12px;"><a href="'+LINKS.site+'"><img src="'+LOGO+'" alt="LendAPI" width="118" style="display: block; border: 0;"></a></td>'
-    +'<td align="right" valign="middle" style="padding-top: 12px; white-space: nowrap;"><a href="'+LINKS.finovate+'" '+acc+'>BEST OF FINOVATE FALL\u201925</a><span style="font-size: 10px; color: #D0D5DD;">&nbsp;|&nbsp;</span><a href="'+LINKS.soc+'" '+acc+'>SOC2</a></td>'
+    +'<tr><td style="padding-top: 18px;"><table cellpadding="0" cellspacing="0" border="0" width="480" style="border-top: 1px solid #EAECF0;"><tr>'
+    +'<td style="padding-top: 8px;"><a href="'+LINKS.site+'"><img src="'+LOGO+'" alt="LendAPI" width="148" style="display: block; border: 0;"></a></td>'
+    +'<td align="right" valign="middle" style="padding-top: 8px; white-space: nowrap; line-height: 1;"><a href="'+LINKS.finovate+'" '+acc+'>BEST OF FINOVATE FALL\u201925</a><br><a href="'+LINKS.soc+'" '+acc+'>SOC2 TYPE II</a></td>'
     +'</tr></table></td></tr></table>';
 }
 function render(){document.getElementById('sig').innerHTML=build();resetBtn();}
@@ -92,6 +101,9 @@ function fallback(node){
   document.execCommand('copy');s.removeAllRanges();
 }
 ['f-name','f-title','f-email','f-booking','f-phone'].forEach(function(id){document.getElementById(id).addEventListener('input',render);});
+var card=document.querySelector('.card'), mL=document.getElementById('mode-light'), mD=document.getElementById('mode-dark');
+mL.addEventListener('click',function(){card.classList.remove('dark');mL.classList.add('on');mD.classList.remove('on');});
+mD.addEventListener('click',function(){card.classList.add('dark');mD.classList.add('on');mL.classList.remove('on');});
 render();
 </script>
 </body>
