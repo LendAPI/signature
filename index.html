@@ -54,7 +54,7 @@ var LINKS = {
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function val(id,fb){var v=document.getElementById(id).value.trim();return v||fb;}
 function build(){
-  var name=esc(val('f-name','Chakresh Peela')), title=esc(val('f-title','VP of Product')),
+  var name=esc(val('f-name','First Last')), title=esc(val('f-title','Your Title')),
       email=esc(val('f-email','you@lendapi.com')), booking=esc(val('f-booking','https://calendly.com/you')),
       phone=document.getElementById('f-phone').value.trim();
   var a='style="color: #7734B8; text-decoration: none;"';
